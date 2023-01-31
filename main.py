@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from raiders import  models, schemas
-from raiders.database import SessionLocal, engine
+from . import  models, schemas
+from .database import SessionLocal, engine
 from fastapi_crudrouter import SQLAlchemyCRUDRouter
 from fastapi.middleware.cors import CORSMiddleware
 
