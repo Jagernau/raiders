@@ -5,7 +5,7 @@ from fastapi_crudrouter import SQLAlchemyCRUDRouter
 from fastapi.middleware.cors import CORSMiddleware
 
 from schemas import FrameworkCreateSchema, FrameworkSchema
-
+import uvicorn
 
 Base.metadata.create_all(bind=engine)
 
@@ -42,3 +42,6 @@ router = SQLAlchemyCRUDRouter(
 )
 
 app.include_router(router)
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
