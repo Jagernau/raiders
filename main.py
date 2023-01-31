@@ -1,11 +1,13 @@
 from fastapi import FastAPI
-from . import  models, schemas
-from .database import SessionLocal, engine
+from models import FrameWorkModel, Base
+from database import SessionLocal, engine
 from fastapi_crudrouter import SQLAlchemyCRUDRouter
 from fastapi.middleware.cors import CORSMiddleware
 
+from schemas import FrameworkCreateSchema, FrameworkSchema
 
-models.Base.metadata.create_all(bind=engine)
+
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
@@ -32,9 +34,9 @@ def get_db():
 
 
 router = SQLAlchemyCRUDRouter(
-    schema=schemas.FrameworkSchema,
-    create_schema=schemas.FrameworkCreateSchema,
-    db_model=models.FrameWorkModel,
+    schema=FrameworkSchema,
+    create_schema=FrameworkCreateSchema,
+    db_model=FrameWorkModel,
     db=get_db,
     prefix='frameworks'
 )
