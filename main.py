@@ -1,10 +1,14 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from models import FrameWorkModel, Base
 from database import SessionLocal, engine
-from fastapi_crudrouter import SQLAlchemyCRUDRouter
 from fastapi.middleware.cors import CORSMiddleware
 
-from schemas import FrameworkCreateSchema, FrameworkSchema
+from sqlalchemy.orm import Session
+from fastapi import Depends, FastAPI
+from crud import get_frams, get_fram_from_lang
+
+
+from schemas import FrameworkSchema
 import uvicorn
 
 Base.metadata.create_all(bind=engine)
@@ -36,15 +40,22 @@ def get_db():
         session.close()
 
 
-router = SQLAlchemyCRUDRouter(
-    schema=FrameworkSchema,
-    create_schema=FrameworkCreateSchema,
-    db_model=FrameWorkModel,
-    db=get_db,
-    prefix='frameworks'
-)
 
-app.include_router(router)
+@app.get("/frameworks/", response_model=list[FrameworkSchema])
+def read_framss(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    frams = get_frams(db, skip=skip, limit=limit)
+    return frams
+
+
+
+@app.get("/frameworks/{language}", response_model=FrameworkSchema)
+def read_frams(language: str, db: Session = Depends(get_db)):
+    db_frams = get_fram_from_lang(db, language=language)
+    if db_frams is None:
+        raise HTTPException(status_code=404, detail="Framework not found")
+    return db_frams
+
+
 
 
 if __name__ == "__main__":
