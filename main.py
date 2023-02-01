@@ -42,14 +42,14 @@ def get_db():
 
 
 @app.get("/frameworks/", response_model=List[FrameworkSchema])
-def read_framss(db: Session = Depends(get_db)):
+def all_frams(db: Session = Depends(get_db)):
     frams = get_frams(db)
     return frams
 
 
 
 @app.get("/frameworks/{language}", response_model=FrameworkSchema)
-def read_frams(language: str, db: Session = Depends(get_db)):
+def one_frams(language: str, db: Session = Depends(get_db)):
     db_frams = get_fram_from_lang(db, language=language)
     if db_frams is None:
         raise HTTPException(status_code=404, detail="Framework not found")
