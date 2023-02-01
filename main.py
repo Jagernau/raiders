@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException
 from models import FrameWorkModel, Base
 from database import SessionLocal, engine
 from fastapi.middleware.cors import CORSMiddleware
-
+from typing import Any, List
 from sqlalchemy.orm import Session
 from fastapi import Depends, FastAPI
 from crud import get_frams, get_fram_from_lang
@@ -41,7 +41,7 @@ def get_db():
 
 
 
-@app.get("/frameworks/", response_model=[FrameworkSchema])
+@app.get("/frameworks/", response_model=List[FrameworkSchema])
 def read_framss(db: Session = Depends(get_db)):
     frams = get_frams(db)
     return frams
