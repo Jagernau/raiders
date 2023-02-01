@@ -2,7 +2,7 @@ from pydantic import BaseModel
 
 class FrameworkCreateSchema(BaseModel):
     name: str
-    language: float
+    language: str
 
 
 
