@@ -41,9 +41,9 @@ def get_db():
 
 
 
-@app.get("/frameworks/", response_model=FrameworkSchema)
-def read_framss(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    frams = get_frams(db, skip=skip, limit=limit)
+@app.get("/frameworks/", response_model=[FrameworkSchema])
+def read_framss(db: Session = Depends(get_db)):
+    frams = get_frams(db)
     return frams
 
 
