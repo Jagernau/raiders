@@ -12,7 +12,7 @@ Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
 origins = [
-    "*"
+    "https://raiders-production.up.railway.app/"
 ]
 
 app.add_middleware(
@@ -44,4 +44,4 @@ router = SQLAlchemyCRUDRouter(
 app.include_router(router)
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="https://raiders-production.up.railway.app/", port=8000)
