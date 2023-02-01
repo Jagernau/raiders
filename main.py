@@ -12,7 +12,9 @@ Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
 origins = [
-    "https://raiders-production.up.railway.app/"
+        "https://raiders-production.up.railway.app:8000/",
+        "https://raiders-production.up.railway.app:8000/",
+
 ]
 
 app.add_middleware(
